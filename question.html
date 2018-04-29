@@ -1,0 +1,61 @@
+<html>
+ <head>
+  <script type="application/javascript">
+    function draw() {
+      var ctx = document.getElementById('canvas').getContext('2d');
+	  var ball = {
+  x: 100,
+  y: 100,
+  vx: 5,
+  vy: 2,
+  radius: 20,
+  color: 'black',
+  draw: function() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.fillStyle = this.color;
+	//ctx.globalAlpha = 0.5;
+	//ctx.globalCompositeOperation = "destination-atop";
+    ctx.fill();
+  }
+}
+var load = {
+draw: function(){
+    // 加载图像
+    var img = new Image();
+    img.onload = function(){
+      ctx.drawImage(img, 0, 0);
+	  //ctx.globalAlpha = 0.5;
+	  ctx.globalCompositeOperation = "destination-atop";
+	  ball.draw();
+    }
+    img.src = 'test2.png';
+	}
+	}
+function draw() {
+  //ctx.clearRect(0,0, canvas.width, canvas.height);
+  load.draw();
+  ball.x += ball.vx;
+  ball.y += ball.vy;
+  raf = window.requestAnimationFrame(draw);
+  if (ball.y + ball.vy > canvas.height || ball.y + ball.vy < 0) {
+  ball.vy = -ball.vy;
+}
+if (ball.x + ball.vx > canvas.width || ball.x + ball.vx < 0) {
+  ball.vx = -ball.vx;
+}
+}
+
+raf = window.requestAnimationFrame(draw);
+ball.draw();
+    }
+	//bgcolor="#000000" 是将网页背景设为黑色；style="margin:0 auto;width:35%" 设置内容居中
+  </script>
+ </head>
+ <body onload="draw();" bgcolor="#000000">
+ <div style="margin:0 auto;width:30%">
+   <canvas id="canvas" width="350" height="600"></canvas>
+ </div>
+ </body>
+</html>
